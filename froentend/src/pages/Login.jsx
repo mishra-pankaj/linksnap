@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
-
+import Navbar from "../components/Navbar"
 export default function Login() {
   const navigate = useNavigate()
 
@@ -64,6 +64,8 @@ export default function Login() {
   }
 
   return (
+    <>
+      <Navbar/>
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
         
@@ -151,5 +153,6 @@ export default function Login() {
         </div>
       </div>
     </div>
+   </>
   )
 }
