@@ -40,8 +40,9 @@ const authRequired = (req, res, next) => {
 // If token exists and is valid: sets req.user
 // If no token or invalid: continues anyway with req.user = undefined (guest)
 const authOptional = (req, res, next) => {
+  
   const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
-
+  
   // If no token, just continue as guest
   if (!token) {
     req.user = undefined;

@@ -37,10 +37,10 @@ export default function Login() {
       )
 
       // Backend returns user data + token
-      console.log('Login response:', response.data)
+      //console.log('Login response:', response.data)
 
       // Save JWT token to localStorage
-      localStorage.setItem('token', response.data.token)
+      localStorage.setItem('token', response.data.user.token)
       localStorage.setItem('user', JSON.stringify(response.data.user))
 
       // Redirect to dashboard

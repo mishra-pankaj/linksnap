@@ -53,7 +53,7 @@ async function shortenUrl(req,res){
 
         return res.status(201).json({
             sucess: true,
-            shortUrl: `https://linksnap.io/${shortId}`,
+            shortUrl: `http://localhost:8000/api/url/${shortId}`,
             shortId,
             originalUrl: normalizedUrl,
             expiresAt: expireAtDate,
@@ -137,6 +137,7 @@ async function redirectURL(req,res){
 }
 
 async function getAnalytics(req, res){
+    
     try{
         const {shortId} = req.params
 
@@ -290,5 +291,39 @@ async function getAnalytics(req, res){
         code: "server_ error"
     })
 }
+// In your auth controller or url controller
+async function getUserLinks(req, res) {
+    
+  try {
+    if(!req.user || !req.user.id){
+        return res.status(401).json({
+            error : "Unauthorized"
+        })
+    }
+    const userId = req.user.id
+    
+    // Find all URLs where user = userId
+    const links = await urlModel.find({ user: userId })
+      .select('shortId redirectURL createdAt')
+      .lean()
+    
+    // Get click counts for each link
+    const linksWithClicks = await Promise.all(
+      links.map(async (link) => {
+        const clicks = await clickModel.countDocuments({ shortId: link.shortId })
+        return {
+          shortId: link.shortId,
+          redirectURL: link.redirectURL,
+          createdAt: link.createdAt,
+          totalClicks: clicks
+        }
+      })
+    )
+    
+    return res.json({ links: linksWithClicks })
+  } catch (err) {
+    return res.status(500).json({ error: 'Failed to fetch links' })
+  }
+}
 
-module.exports = {shortenUrl,redirectURL,getAnalytics}
+module.exports = {shortenUrl,redirectURL,getAnalytics,getUserLinks}

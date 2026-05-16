@@ -20,15 +20,28 @@ export default function Home() {
     setError('')
     setCopied(false)
 
+    // try {
+    //   // Make API call to your backend
+    //   const response = await axios.post(
+    //     `${import.meta.env.VITE_API_URL}/api/url/shorten`,
+    //     { url: url }
+    //   )
+
     try {
-      // Make API call to your backend
+      const token = localStorage.getItem('token')  // ← GET TOKEN
+    
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/shorten`,
-        { url: url }
+        `${import.meta.env.VITE_API_URL}/api/url/shorten`,
+        { url: url },
+        {
+         headers: {
+            Authorization: `Bearer ${token}`  // ← SEND TOKEN
+          }
+        }
       )
 
       // Backend returned the shortened URL
-      console.log('API Response:', response.data)
+      //console.log('API Response:', response.data)
       setShortUrl(response.data.shortUrl)
       setUrl('')
 

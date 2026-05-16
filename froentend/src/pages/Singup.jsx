@@ -49,14 +49,14 @@ export default function Signup() {
       // Make API call to backend with username, email, password
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/auth/register`,
-        { username, email, password }
+        { username, email, password,role: "user" }
       )
 
       // Backend returns user data + token
-      console.log('Signup response:', response.data)
+      //console.log('Signup response:', response.data)
 
       // Save JWT token to localStorage
-      localStorage.setItem('token', response.data.token)
+      localStorage.setItem('token', response.data.user.token)
       localStorage.setItem('user', JSON.stringify(response.data.user))
 
       // Redirect to dashboard
