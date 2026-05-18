@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
-import Navbar from "../components/Navbar"
+import Navbar from '../components/Navbar'
+
 export default function Login() {
   const navigate = useNavigate()
 
@@ -26,18 +27,17 @@ export default function Login() {
 
     try {
       // Make API call to backend
-      // Send either username or email - backend will handle both
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/auth/login`,
         { 
-          username: usernameOrEmail,  // Can be username
-          email: usernameOrEmail,     // Or email - backend will check both
+          username: usernameOrEmail,
+          email: usernameOrEmail,
           password 
         }
       )
 
       // Backend returns user data + token
-      //console.log('Login response:', response.data)
+      console.log('Login response:', response.data)
 
       // Save JWT token to localStorage
       localStorage.setItem('token', response.data.user.token)
@@ -65,94 +65,101 @@ export default function Login() {
 
   return (
     <>
-      <Navbar/>
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
+      <Navbar />
+      
+      {/* FULL WIDTH HERO BACKGROUND */}
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center px-4 py-12">
         
-        {/* Header */}
-        <h1 className="text-3xl font-bold text-center mb-2 text-indigo-600">LinkSnap</h1>
-        <p className="text-center text-gray-600 mb-8">Welcome back</p>
+        {/* CENTERED CARD */}
+        <div className="w-full max-w-md">
+          <div className="bg-white rounded-3xl shadow-2xl p-10 md:p-12">
+            
+            {/* HEADER */}
+            <div className="text-center mb-10">
+              <h1 className="text-4xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
+                LinkSnap
+              </h1>
+              <p className="text-slate-600 text-lg font-semibold">Welcome back</p>
+            </div>
 
-        {/* Form */}
-        <form onSubmit={handleLogin} className="space-y-4">
-          {/* Username or Email input */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Username or Email
-            </label>
-            <input
-              type="text"
-              value={usernameOrEmail}
-              onChange={(e) => setUsernameOrEmail(e.target.value)}
-              placeholder="john_doe or you@example.com"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
-              required
-            />
-          </div>
+            {/* FORM */}
+            <form onSubmit={handleLogin} className="space-y-6">
+              
+              {/* USERNAME/EMAIL INPUT */}
+              <div>
+                <label className="block text-sm font-bold text-slate-800 mb-3">
+                  Username or Email
+                </label>
+                <input
+                  type="text"
+                  value={usernameOrEmail}
+                  onChange={(e) => setUsernameOrEmail(e.target.value)}
+                  placeholder="john_doe or you@example.com"
+                  className="w-full px-5 py-3 border-2 border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300"
+                  required
+                />
+              </div>
 
-          {/* Password input */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
-              required
-            />
-          </div>
+              {/* PASSWORD INPUT */}
+              <div>
+                <label className="block text-sm font-bold text-slate-800 mb-3">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full px-5 py-3 border-2 border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300"
+                  required
+                />
+              </div>
 
-          {/* Forgot password link */}
-          <div className="text-right">
-            <a href="#" className="text-sm text-indigo-600 hover:text-indigo-700">
-              Forgot password?
-            </a>
-          </div>
+              {/* FORGOT PASSWORD LINK */}
+              <div className="text-right">
+                <a href="#" className="text-indigo-600 hover:text-indigo-700 font-semibold text-sm transition-colors duration-300">
+                  Forgot password?
+                </a>
+              </div>
 
-          {/* Login button */}
-          <button
-            type="submit"
-            disabled={loading}
-            className={`w-full py-3 rounded-lg font-semibold text-white transition duration-200 ${
-              loading
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-indigo-600 hover:bg-indigo-700 active:scale-95'
-            }`}
-          >
-            {loading ? (
-              <span className="flex items-center justify-center gap-2">
-                <span className="animate-spin">⟳</span> Signing in...
-              </span>
-            ) : (
-              'Sign In'
+              {/* LOGIN BUTTON */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-4 rounded-xl font-bold text-lg text-white transition-all duration-300 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:shadow-xl disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <span className="animate-spin">⟳</span> Signing in...
+                  </span>
+                ) : (
+                  'Sign In'
+                )}
+              </button>
+            </form>
+
+            {/* ERROR MESSAGE */}
+            {error && (
+              <div className="mt-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg">
+                <p className="text-red-700 font-bold text-sm">❌ {error}</p>
+              </div>
             )}
-          </button>
-        </form>
 
-        {/* Error message */}
-        {error && (
-          <div className="mt-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
-            <p className="font-medium">❌ {error}</p>
+            {/* SIGNUP LINK */}
+            <div className="mt-8 pt-8 border-t-2 border-slate-200 text-center">
+              <p className="text-slate-600 font-semibold mb-4">
+                Don't have an account?
+              </p>
+              <Link
+                to="/signup"
+                className="text-indigo-600 font-bold text-lg hover:text-indigo-700 transition-colors duration-300"
+              >
+                Sign up here
+              </Link>
+            </div>
           </div>
-        )}
-
-        {/* Sign up link */}
-        <div className="mt-8 pt-6 border-t border-gray-200 text-center">
-          <p className="text-sm text-gray-600 mb-3">
-            Don't have an account?
-          </p>
-          <Link
-            to="/signup"
-            className="text-indigo-600 font-semibold hover:text-indigo-700"
-          >
-            Sign up here
-          </Link>
         </div>
       </div>
-    </div>
-   </>
+    </>
   )
 }

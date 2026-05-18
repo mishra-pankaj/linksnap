@@ -5,6 +5,7 @@ import Login from './pages/Login'
 import Signup from './pages/Singup'
 import Dashboard from './pages/Dashboard'
 import Analytics from './pages/Analytics'
+import HowToUse from './pages/HowToUse'
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/analytics/:shortId" element={<Analytics />} />
+          <Route path="/how-to-use" element={<HowToUse />} />
       </Routes>
 
     </Router>

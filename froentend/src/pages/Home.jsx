@@ -1,52 +1,39 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Navbar from '../components/Navbar'
 
 export default function Home() {
-  // State variables
+  const navigate = useNavigate()
   const [url, setUrl] = useState('')
   const [shortUrl, setShortUrl] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [copied, setCopied] = useState(false)
 
-  // Function to handle the shorten button click
   const handleShorten = async (e) => {
     e.preventDefault()
-
-    // Reset previous states
     setLoading(true)
     setError('')
     setCopied(false)
 
-    // try {
-    //   // Make API call to your backend
-    //   const response = await axios.post(
-    //     `${import.meta.env.VITE_API_URL}/api/url/shorten`,
-    //     { url: url }
-    //   )
-
     try {
-      const token = localStorage.getItem('token')  // ← GET TOKEN
-    
+      const token = localStorage.getItem('token')
+      
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/url/shorten`,
         { url: url },
         {
-         headers: {
-            Authorization: `Bearer ${token}`  // ← SEND TOKEN
+          headers: {
+            Authorization: `Bearer ${token}`
           }
         }
       )
 
-      // Backend returned the shortened URL
       //console.log('API Response:', response.data)
       setShortUrl(response.data.shortUrl)
       setUrl('')
-
     } catch (err) {
-      // Something went wrong
       console.error('Error:', err)
       
       if (err.response?.status === 400) {
@@ -63,131 +50,156 @@ export default function Home() {
     }
   }
 
-  // Function to copy URL to clipboard
   const handleCopy = () => {
     navigator.clipboard.writeText(shortUrl)
     setCopied(true)
-    
-    // Reset the "copied" message after 2 seconds
     setTimeout(() => setCopied(false), 2000)
   }
 
   return (
     <>
-      <Navbar/>
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      {/* Main card container */}
-      <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
+      <Navbar />
+      
+      {/* FULL WIDTH HERO BACKGROUND */}
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
         
-        {/* Header */}
-        <h1 className="text-4xl font-bold text-center mb-2 text-indigo-600">LinkSnap</h1>
-        <p className="text-center text-gray-600 mb-8">Create short, shareable links instantly</p>
-
-        {/* Form */}
-        <form onSubmit={handleShorten} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Enter URL
-            </label>
-            <input
-              type="url"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder="https://example.com"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
-              required
-            />
-          </div>
-
-          {/* Shorten button */}
-          <button
-            type="submit"
-            disabled={loading || !url}
-            className={`w-full py-3 rounded-lg font-semibold text-white transition duration-200 ${
-              loading || !url
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-indigo-600 hover:bg-indigo-700 active:scale-95'
-            }`}
-          >
-            {loading ? (
-              <span className="flex items-center justify-center gap-2">
-                <span className="animate-spin">⟳</span> Creating...
-              </span>
-            ) : (
-              'Shorten URL'
-            )}
-          </button>
-        </form>
-
-        {/* Error message */}
-        {error && (
-          <div className="mt-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200">
-            <p className="font-medium">❌ {error}</p>
-          </div>
-        )}
-
-        {/* Success - Show shortened URL */}
-        {shortUrl && (
-          <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-            <p className="text-sm text-gray-600 mb-3 font-medium">Your short link:</p>
+        {/* CENTERED HERO CONTENT */}
+        <div className="flex items-center justify-center min-h-[calc(100vh-70px)] px-4 py-12">
+          <div className="w-full max-w-3xl">
             
-            {/* Display the short URL */}
-            <div className="mb-4">
-              <p className="text-lg font-mono text-indigo-600 break-all bg-white p-3 rounded border border-gray-200">
-                {shortUrl}
+            {/* HERO TEXT SECTION */}
+            <div className="text-center mb-16">
+              {/* MAIN TITLE */}
+              <h1 className="text-6xl md:text-7xl font-black text-slate-900 mb-4 leading-tight">
+                Shorten URLs
+              </h1>
+              
+              {/* GRADIENT SUBTITLE */}
+              <h2 className="text-5xl md:text-6xl font-black mb-8 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                in Seconds
+              </h2>
+              
+              {/* DESCRIPTION */}
+              <p className="text-xl md:text-2xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                Create short, shareable links and track every click in real-time with advanced analytics.
               </p>
             </div>
 
-            {/* Copy button */}
-            <button
-              onClick={handleCopy}
-              className={`w-full py-2 rounded-lg text-sm font-medium transition duration-200 ${
-                copied
-                  ? 'bg-green-100 text-green-700 border border-green-300'
-                  : 'bg-gray-800 text-white hover:bg-gray-900'
-              }`}
-            >
-              {copied ? '✓ Copied to Clipboard!' : 'Copy to Clipboard'}
-            </button>
+            {/* WHITE CARD - URL SHORTENER */}
+            <div className="bg-white rounded-3xl shadow-2xl p-10 md:p-14 mb-12">
+              
+              {/* FORM */}
+              <form onSubmit={handleShorten} className="space-y-6">
+                
+                {/* INPUT LABEL */}
+                <div>
+                  <label className="block text-lg font-bold text-slate-900 text-center  mb-4">
+                    Enter Your URL
+                  </label>
+                  
+                  {/* URL INPUT FIELD */}
+                  <input
+                    type="url"
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                    placeholder="Paste your long URL here..."
+                    className="w-full px-6 py-4 text-lg border-2 border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300"
+                    required
+                  />
+                </div>
 
-            {/* Share info */}
-            <p className="text-xs text-gray-500 text-center mt-3">
-              Share this link anywhere and it will redirect to the original URL
-            </p>
+                {/* SHORTEN BUTTON */}
+                <button
+                  type="submit"
+                  disabled={loading || !url}
+                  className="w-full py-4 md:py-5 rounded-xl font-bold text-lg text-white transition-all duration-300 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:shadow-xl disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <span className="animate-spin">⟳</span> Creating...
+                    </span>
+                  ) : (
+                    'Shorten URL'
+                  )}
+                </button>
+              </form>
+
+              {/* ERROR MESSAGE */}
+              {error && (
+                <div className="mt-8 p-5 bg-red-50 border-l-4 border-red-500 rounded-lg">
+                  <p className="text-red-700 font-bold text-base">❌ {error}</p>
+                </div>
+              )}
+
+              {/* SUCCESS - SHORTENED LINK DISPLAY */}
+              {shortUrl && (
+                <div className="mt-10 pt-10 border-t-2 border-slate-200">
+                  
+                  {/* SUCCESS LABEL */}
+                  <p className="text-base font-bold text-slate-700 mb-4">Your Short Link:</p>
+                  
+                  {/* SHORTENED LINK BOX */}
+                  <div className="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-xl mb-6 border-l-4 border-indigo-600">
+                    <p className="text-lg md:text-xl font-bold font-mono text-indigo-600 break-all">
+                      {shortUrl}
+                    </p>
+                  </div>
+
+                  {/* COPY BUTTON */}
+                  <button
+                    onClick={handleCopy}
+                    className={`w-full py-4 rounded-xl font-bold text-lg text-white transition-all duration-300 ${
+                      copied
+                        ? 'bg-gradient-to-r from-green-500 to-emerald-600 shadow-lg'
+                        : 'bg-gradient-to-r from-slate-800 to-slate-900 hover:shadow-lg'
+                    }`}
+                  >
+                    {copied ? '✓ Copied to Clipboard!' : '📋 Copy to Clipboard'}
+                  </button>
+
+                  {/* SHARE INFO */}
+                  <p className="text-sm text-slate-500 text-center mt-4">
+                    Share this link anywhere and it will redirect to the original URL
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* AUTHENTICATION SECTION */}
+            <div className="text-center">
+              
+              {/* UNLOCK FEATURES TEXT */}
+              <p className="text-slate-700 text-lg mb-8">
+                <strong className="text-slate-900 text-xl block mb-2">Sign up to unlock analytics</strong>
+                and track clicks on your links
+              </p>
+
+              {/* LOGIN & SIGNUP BUTTONS */}
+              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                
+                {/* LOGIN BUTTON */}
+                {/*<button
+                  onClick={() => navigate('/login')}
+                  className="px-10 py-4 border-2 border-indigo-600 text-indigo-600 font-bold text-lg rounded-xl hover:bg-indigo-50 transition-colors duration-300"
+                >
+                  Login
+                </button>*/}
+                
+                {/* SIGNUP BUTTON */}
+                {/*<button
+                  onClick={() => navigate('/signup')}
+                  className="px-10 py-4 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white font-bold text-lg rounded-xl hover:shadow-lg transition-all duration-300"
+                >
+                  Sign Up
+                </button>*/}
+              </div>
+            </div>
+
+            {/* DEBUG INFO BOX */}
+            
           </div>
-        )}
-
-        {/* Divider */}
-        <div className="mt-8 pt-6 border-t border-gray-200">
-          {/* Sign up prompt */}
-          <p className="text-sm text-gray-600 text-center mb-4">
-            <strong>Sign up to view analytics</strong><br />
-            and track clicks on your links
-          </p>
-
-          {/* Auth buttons - NOW WITH WORKING LINKS */}
-          <div className="flex gap-3">
-            <Link
-              to="/login"
-              className="flex-1 border-2 border-indigo-600 text-indigo-600 py-2 rounded-lg text-sm font-medium hover:bg-indigo-50 transition text-center"
-            >
-              Login
-            </Link>
-            <Link
-              to="/signup"
-              className="flex-1 bg-indigo-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition text-center"
-            >
-              Sign Up
-            </Link>
-          </div>
-        </div>
-
-        {/* Debug info */}
-        <div className="mt-6 p-2 bg-yellow-50 rounded text-xs text-yellow-700 border border-yellow-200">
-          💡 Make sure your backend is running on http://localhost:8000
         </div>
       </div>
-    </div>
     </>
   )
 }

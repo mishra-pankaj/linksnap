@@ -8,7 +8,6 @@ export default function Analytics() {
   const { shortId } = useParams()
   const navigate = useNavigate()
   
-  // State variables
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -31,7 +30,7 @@ export default function Analytics() {
           return
         }
 
-        //console.log('Fetching analytics for shortId:', shortId)
+        console.log('Fetching analytics for shortId:', shortId)
         
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/api/url/analytics/${shortId}`,
@@ -42,7 +41,7 @@ export default function Analytics() {
           }
         )
 
-        //console.log('Analytics response:', response.data)
+        console.log('Analytics response:', response.data)
         setData(response.data)
       } catch (err) {
         console.error('Error fetching analytics:', err)
@@ -70,12 +69,12 @@ export default function Analytics() {
     return (
       <>
         <Navbar />
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="flex items-center justify-center p-12 bg-white rounded-lg shadow-md">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-12 px-4">
+          <div className="w-full mx-auto">
+            <div className="flex items-center justify-center p-16 bg-white rounded-2xl shadow-lg">
               <div className="text-center">
-                <div className="animate-spin text-4xl mb-4">⟳</div>
-                <p className="text-gray-600">Loading analytics...</p>
+                <div className="animate-spin text-5xl mb-4">⟳</div>
+                <p className="text-slate-600 text-lg font-semibold">Loading analytics...</p>
               </div>
             </div>
           </div>
@@ -89,13 +88,13 @@ export default function Analytics() {
     return (
       <>
         <Navbar />
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
-              <p className="text-red-700 font-medium">❌ {error}</p>
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-12 px-4">
+          <div className="w-full mx-auto">
+            <div className="bg-red-50 border-l-4 border-red-500 rounded-xl p-8 mb-6">
+              <p className="text-red-700 font-bold text-lg">❌ {error}</p>
               <button
                 onClick={() => navigate('/dashboard')}
-                className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+                className="mt-6 px-6 py-3 bg-indigo-600 text-white rounded-xl font-bold hover:shadow-lg transition-all duration-300"
               >
                 Go Back to Dashboard
               </button>
@@ -109,106 +108,124 @@ export default function Analytics() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
-        <div className="max-w-6xl mx-auto">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-12 px-4">
+        <div className="w-full mx-auto">
           
-          {/* Page Header with Back Button */}
-          <div className="mb-8">
+          {/* PAGE HEADER */}
+          <div className="mb-12">
             <button
               onClick={() => navigate('/dashboard')}
-              className="text-indigo-600 hover:text-indigo-700 font-medium mb-4 flex items-center gap-2"
+              className="text-indigo-600 hover:text-indigo-700 font-bold text-lg mb-6 flex items-center gap-2 transition-colors duration-300"
             >
               ← Back to Dashboard
             </button>
-            <h1 className="text-4xl font-bold text-gray-800 mb-2">Analytics</h1>
-            <p className="text-gray-600">
-              Statistics for: <span className="font-mono text-indigo-600">http://localhost:8000/api/url/{data?.shortId}</span>
+            <h1 className="text-5xl md:text-6xl font-black text-slate-900 mb-4">Analytics</h1>
+            <p className="text-xl text-slate-600">
+              Statistics for: <span className="font-bold font-mono text-indigo-600">http://localhost:8000/api/url/analytics/{data?.shortId}</span>
             </p>
           </div>
 
-          {/* Stats Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            {/* Total Clicks Card */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <p className="text-gray-500 text-sm mb-2">Total Clicks</p>
-              <p className="text-4xl font-bold text-indigo-600">{data?.totalClick || 0}</p>
+          {/* STAT CARDS - 4 COLUMN GRID */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+            
+            {/* TOTAL CLICKS CARD */}
+            <div className="bg-white rounded-2xl shadow-lg p-8 border-t-4 border-indigo-600">
+              <p className="text-sm font-bold text-slate-600 mb-4">Total Clicks</p>
+              <p className="text-5xl font-black text-indigo-600">{data?.totalClick || 0}</p>
             </div>
 
-            {/* Last 24 Hours Card */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <p className="text-gray-500 text-sm mb-2">Last 24 Hours</p>
-              <p className="text-4xl font-bold text-blue-600">{data?.click_24h || 0}</p>
+            {/* LAST 24 HOURS CARD */}
+            <div className="bg-white rounded-2xl shadow-lg p-8 border-t-4 border-blue-500">
+              <p className="text-sm font-bold text-slate-600 mb-4">Last 24 Hours</p>
+              <p className="text-5xl font-black text-blue-500">{data?.click_24h || 0}</p>
             </div>
 
-            {/* Last 7 Days Card */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <p className="text-gray-500 text-sm mb-2">Last 7 Days</p>
-              <p className="text-4xl font-bold text-green-600">{data?.click_7d || 0}</p>
+            {/* LAST 7 DAYS CARD */}
+            <div className="bg-white rounded-2xl shadow-lg p-8 border-t-4 border-green-500">
+              <p className="text-sm font-bold text-slate-600 mb-4">Last 7 Days</p>
+              <p className="text-5xl font-black text-green-500">{data?.click_7d || 0}</p>
             </div>
 
-            {/* Last 30 Days Card */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <p className="text-gray-500 text-sm mb-2">Last 30 Days</p>
-              <p className="text-4xl font-bold text-purple-600">{data?.clicks_30d || 0}</p>
+            {/* LAST 30 DAYS CARD */}
+            <div className="bg-white rounded-2xl shadow-lg p-8 border-t-4 border-purple-500">
+              <p className="text-sm font-bold text-slate-600 mb-4">Last 30 Days</p>
+              <p className="text-5xl font-black text-purple-500">{data?.clicks_30d || 0}</p>
             </div>
           </div>
 
-          {/* Time Series Chart */}
-          <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Click Trends</h2>
+          {/* CLICK TRENDS CHART */}
+          <div className="bg-white rounded-2xl shadow-lg p-10 mb-10">
+            <h2 className="text-3xl font-black text-slate-900 mb-8">Click Trends</h2>
             {data?.timeseries && data.timeseries.length > 0 ? (
               <ResponsiveContainer width="100%" height={400}>
-                <LineChart data={data.timeseries}>
-                  <CartesianGrid strokeDasharray="3 3" />
+                <LineChart data={data.timeseries} margin={{ top: 5, right: 30, left: 0, bottom: 5 }}>
+                  <defs>
+                    <linearGradient id="colorClicks" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.8}/>
+                      <stop offset="95%" stopColor="#4f46e5" stopOpacity={0.1}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
                   <XAxis 
                     dataKey="date" 
                     angle={-45}
                     textAnchor="end"
                     height={80}
+                    tick={{ fill: '#64748b', fontSize: 12 }}
                   />
-                  <YAxis />
+                  <YAxis 
+                    tick={{ fill: '#64748b', fontSize: 12 }}
+                  />
                   <Tooltip 
                     contentStyle={{
-                      backgroundColor: '#fff',
-                      border: '1px solid #ccc',
-                      borderRadius: '8px'
+                      backgroundColor: '#ffffff',
+                      border: '2px solid #4f46e5',
+                      borderRadius: '12px',
+                      boxShadow: '0 10px 25px rgba(0,0,0,0.1)'
                     }}
+                    labelStyle={{ color: '#0f172a', fontWeight: 'bold' }}
                   />
-                  <Legend />
+                  <Legend 
+                    wrapperStyle={{ paddingTop: '20px' }}
+                    iconType="line"
+                  />
                   <Line 
                     type="monotone" 
                     dataKey="clicks" 
-                    stroke="#4F46E5" 
-                    dot={{ fill: '#4F46E5' }}
-                    activeDot={{ r: 6 }}
+                    stroke="#4f46e5"
+                    strokeWidth={3}
+                    dot={{ fill: '#4f46e5', r: 5 }}
+                    activeDot={{ r: 7, fill: '#764ba2' }}
+                    fillOpacity={1}
+                    fill="url(#colorClicks)"
                   />
                 </LineChart>
               </ResponsiveContainer>
             ) : (
-              <p className="text-gray-500 text-center py-8">No click data available</p>
+              <p className="text-slate-500 text-center py-12 text-lg">No click data available</p>
             )}
           </div>
 
-          {/* Two Column Layout for Tables */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* TWO COLUMN LAYOUT - TABLES */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             
-            {/* Top Referrers Table */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">Top Referrers</h2>
+            {/* TOP REFERRERS TABLE */}
+            <div className="bg-white rounded-2xl shadow-lg p-10">
+              <h2 className="text-3xl font-black text-slate-900 mb-8">Top Referrers</h2>
               {data?.topReferrers && data.topReferrers.length > 0 ? (
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b-2 border-gray-200">
-                        <th className="text-left py-3 px-4 font-semibold text-gray-700">Source</th>
-                        <th className="text-right py-3 px-4 font-semibold text-gray-700">Clicks</th>
+                      <tr className="border-b-2 border-slate-200">
+                        <th className="text-left py-4 px-4 font-bold text-slate-700">Source</th>
+                        <th className="text-right py-4 px-4 font-bold text-slate-700">Clicks</th>
                       </tr>
                     </thead>
                     <tbody>
                       {data.topReferrers.map((referrer, index) => (
-                        <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
-                          <td className="py-3 px-4 text-gray-800">{referrer.referrer}</td>
-                          <td className="py-3 px-4 text-right font-semibold text-indigo-600">
+                        <tr key={index} className="border-b border-slate-100 hover:bg-slate-50 transition-colors duration-300">
+                          <td className="py-4 px-4 text-slate-800 font-semibold">{referrer.referrer}</td>
+                          <td className="py-4 px-4 text-right font-bold text-indigo-600 text-lg">
                             {referrer.count}
                           </td>
                         </tr>
@@ -217,27 +234,27 @@ export default function Analytics() {
                   </table>
                 </div>
               ) : (
-                <p className="text-gray-500 text-center py-8">No referrer data available</p>
+                <p className="text-slate-500 text-center py-12 text-lg">No referrer data available</p>
               )}
             </div>
 
-            {/* Top Countries Table */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">Top Countries</h2>
+            {/* TOP COUNTRIES TABLE */}
+            <div className="bg-white rounded-2xl shadow-lg p-10">
+              <h2 className="text-3xl font-black text-slate-900 mb-8">Top Countries</h2>
               {data?.topCountries && data.topCountries.length > 0 ? (
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b-2 border-gray-200">
-                        <th className="text-left py-3 px-4 font-semibold text-gray-700">Country</th>
-                        <th className="text-right py-3 px-4 font-semibold text-gray-700">Clicks</th>
+                      <tr className="border-b-2 border-slate-200">
+                        <th className="text-left py-4 px-4 font-bold text-slate-700">Country</th>
+                        <th className="text-right py-4 px-4 font-bold text-slate-700">Clicks</th>
                       </tr>
                     </thead>
                     <tbody>
                       {data.topCountries.map((country, index) => (
-                        <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
-                          <td className="py-3 px-4 text-gray-800">{country.country}</td>
-                          <td className="py-3 px-4 text-right font-semibold text-green-600">
+                        <tr key={index} className="border-b border-slate-100 hover:bg-slate-50 transition-colors duration-300">
+                          <td className="py-4 px-4 text-slate-800 font-semibold">{country.country}</td>
+                          <td className="py-4 px-4 text-right font-bold text-green-600 text-lg">
                             {country.count}
                           </td>
                         </tr>
@@ -246,7 +263,7 @@ export default function Analytics() {
                   </table>
                 </div>
               ) : (
-                <p className="text-gray-500 text-center py-8">No country data available</p>
+                <p className="text-slate-500 text-center py-12 text-lg">No country data available</p>
               )}
             </div>
           </div>
