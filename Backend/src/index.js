@@ -9,8 +9,10 @@ const cors = require("cors")
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: ["http://localhost:5173",
-        "https://linksnap-mxuh.vercel.app"],
+    origin: [
+        "http://localhost:5173",
+        "https://linksnap-mxuh-bsiw3ex72-mishra-pankajs-projects.vercel.app"
+    ],
         credentials: true
 }))
 connectdb()
