@@ -68,7 +68,7 @@ export default function Dashboard() {
 
   // Copy short link to clipboard
   const handleCopy = (shortId) => {
-    const shortLink = `linksnap.io/${shortId}`
+    const shortLink = `http://localhost:8000/api/url/${shortId}`
     navigator.clipboard.writeText(shortLink)
     setCopiedId(shortId)
     
