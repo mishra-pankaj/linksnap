@@ -68,7 +68,7 @@ export default function Dashboard() {
 
   // Copy short link to clipboard
   const handleCopy = (shortId) => {
-    const shortLink = `http://localhost:8000/api/url/${shortId}`
+    const shortLink = `https://linksnap-mxuh.vercel.app/api/url/${shortId}`
     navigator.clipboard.writeText(shortLink)
     setCopiedId(shortId)
     
@@ -162,7 +162,7 @@ export default function Dashboard() {
                     <div>
                       <p className="text-sm font-bold text-slate-600 mb-3">Short Link</p>
                       <p className="text-lg font-mono text-indigo-600 break-all font-bold">
-                         http://localhost:8000/api/url/{link.shortId}
+                         https://linksnap-mxuh.vercel.app/api/url/{link.shortId}
                       </p>
                     </div>
 

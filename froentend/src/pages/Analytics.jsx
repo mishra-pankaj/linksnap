@@ -121,7 +121,7 @@ export default function Analytics() {
             </button>
             <h1 className="text-5xl md:text-6xl font-black text-slate-900 mb-4">Analytics</h1>
             <p className="text-xl text-slate-600">
-              Statistics for: <span className="font-bold font-mono text-indigo-600">http://localhost:8000/api/url/analytics/{data?.shortId}</span>
+              Statistics for: <span className="font-bold font-mono text-indigo-600">https://linksnap-mxuh.vercel.app/api/url/analytics/{data?.shortId}</span>
             </p>
           </div>
 
