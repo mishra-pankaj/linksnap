@@ -53,7 +53,7 @@ async function shortenUrl(req,res){
 
         return res.status(201).json({
             sucess: true,
-            shortUrl: `http://localhost:8000/api/url/${shortId}`,
+            shortUrl: `https://linksnap-mxuh.vercel.app/api/url/${shortId}`,
             shortId,
             originalUrl: normalizedUrl,
             expiresAt: expireAtDate,
