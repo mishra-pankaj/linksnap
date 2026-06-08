@@ -53,7 +53,9 @@ async function registerUser(req,res){
         user:{
             id: user._id,
             username: user.username,
-            email:user.email
+            email:user.email,
+            token:token,
+
 
         }
     })
@@ -83,7 +85,7 @@ async function loginUser(req,res){
         id: user._id,
         role: user.role,
     },process.env.JWT_SECRET,{expiresIn: "1d"})
-        
+
     //res.cookie("token",token)
 
     res.status(200).json({
