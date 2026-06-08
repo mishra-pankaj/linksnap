@@ -9,7 +9,7 @@ export default function HowToUse() {
       <Navbar />
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-12 px-4">
         <div className="w-full mx-auto">
-          
+
           {/* PAGE HEADER */}
           <div className="mb-12">
             <button
@@ -25,24 +25,28 @@ export default function HowToUse() {
           {/* VIDEO SECTION */}
           <div className="bg-white rounded-2xl shadow-lg p-10 mb-12">
             <h2 className="text-3xl font-black text-slate-900 mb-8">Watch the Tutorial</h2>
-            
+
             {/* VIDEO CONTAINER */}
-            <div className="aspect-video bg-slate-900 rounded-xl overflow-hidden mb-6 flex items-center justify-center">
-              <div id="video-container">
-                {/* VIDEO WILL BE EMBEDDED HERE */}
-                <p className="text-white text-center">
-                  Video will be embedded here
-                </p>
-              </div>
+           {/* VIDEO CONTAINER */}
+            <div className="aspect-video bg-slate-900 rounded-xl overflow-hidden mb-6">
+              <iframe
+                className='w-full h-full'
+                src="https://www.youtube.com/embed/rEz51K0GD4w"
+                title="LinkSnap Tutorial"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
             </div>
           </div>
+
 
           {/* STEP BY STEP GUIDE */}
           <div className="bg-white rounded-2xl shadow-lg p-10 mb-12">
             <h2 className="text-3xl font-black text-slate-900 mb-10">Step-by-Step Guide</h2>
-            
+
             <div className="space-y-8">
-              
+
               {/* STEP 1 */}
               <div className="flex gap-8">
                 <div className="flex-shrink-0">
@@ -138,9 +142,9 @@ export default function HowToUse() {
           {/* FEATURES SECTION */}
           <div className="bg-white rounded-2xl shadow-lg p-10 mb-12">
             <h2 className="text-3xl font-black text-slate-900 mb-10">Key Features</h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              
+
               {/* FEATURE 1 */}
               <div className="p-6 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border-l-4 border-indigo-600">
                 <div className="text-3xl mb-4">🔗</div>
@@ -188,9 +192,9 @@ export default function HowToUse() {
           {/* FAQ SECTION */}
           <div className="bg-white rounded-2xl shadow-lg p-10 mb-12">
             <h2 className="text-3xl font-black text-slate-900 mb-10">FAQ</h2>
-            
+
             <div className="space-y-6">
-              
+
               {/* FAQ 1 */}
               <div className="pb-6 border-b-2 border-slate-200">
                 <h3 className="text-xl font-bold text-slate-900 mb-3">❓ Do I need to create an account?</h3>
